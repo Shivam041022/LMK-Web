@@ -1,0 +1,52 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "tagsParam": {
+            "value": {
+                "application": "Legal Orders Website Frontend",
+                "businessArea": "Legal",
+                "dataClassification": "Company Internal",
+                "environment": "BVT",
+                "version": "0.0.1"
+            }
+        },
+        "resourceGroupParam": {
+            "value": {
+                "name": "legal-bvt-orderswebsite-uks",
+                "location": "uksouth"
+            }
+        },
+        "applicationInsightsParam": {
+            "value": {
+                "name": "legal-bvt-orderswebsite-appinsights-uks"
+            }
+        },
+        "logAnalyticsParam": {
+            "value": {
+                "name": "legal-bvt-orderswebsite-loganalytics-uks",
+                "resourceGroup": "legal-bvt-orderswebsite-uks",
+                "retentionInDays": 30,
+                "dailyQuotaGb": 1
+            }
+        },
+        "wafParam": {
+            "value": {
+                "name": "legalbvtorderswebsitefrontendwaf"
+            }
+        },
+        "frontDoorParam": {
+            "value": {
+                "name": "legal-bvt-orderswebsite-frontdoor",
+                "customDomainName": "bvt-reports.landmark.co.uk",
+                "backendPoolsApiHubHostname": "bvt-api.landmarkcloudservices.com",
+                "backendPoolsMfeHostname": "bvt-mfe.landmark.co.uk"
+            }
+        },
+        "staticSiteParam": {
+            "value": {
+                "name": "legal-bvt-orderswebsite-staticsite"
+            }
+        }
+    }
+}

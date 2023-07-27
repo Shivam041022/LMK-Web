@@ -1,0 +1,44 @@
+parameters:
+- name: name
+  displayName: Stage Name
+  type: string
+
+- name: displayName
+  displayName: Stage Display Name
+  type: string
+
+- name: dependsOn
+  displayName: Depends On
+  type: object
+  default: ''
+
+- name: condition
+  displayName: Condition
+  type: string
+  default: ''
+
+- name: variables
+  displayName: Variables
+  type: object
+  default: ''
+
+- name: environment
+  displayName: Environment
+  type: string
+
+stages:
+- stage: ${{ parameters.name }}
+  displayName: ${{ parameters.displayName }}
+  ${{ if not(eq(parameters.dependsOn, '')) }}:
+    dependsOn: ${{ parameters.dependsOn }}
+  ${{ if not(eq(parameters.condition, '')) }}:
+    condition: ${{ parameters.condition }}
+  ${{ if not(eq(parameters.variables, '')) }}:
+    variables: ${{ parameters.variables }}
+
+  jobs:
+  # Deploy Azure resources
+  - template: ../Jobs/job-deploy-bicep-templates.yml
+    parameters:
+      variables: ${{ parameters.variables }}
+      environment: ${{ parameters.environment }}

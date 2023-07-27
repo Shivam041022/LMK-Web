@@ -1,0 +1,46 @@
+parameters:
+- name: dependsOn
+  displayName: Depends On
+  type: object
+  default: ''
+
+- name: condition
+  displayName: Condition
+  type: string
+  default: ''
+
+- name: variables
+  displayName: Variables
+  type: object
+  default: ''
+
+- name: environment
+  displayName: Environment
+  type: string
+
+jobs:
+- deployment: Deploy_Bicep_Templates
+  displayName: Deploy Bicep Templates
+  ${{ if not(eq(parameters.dependsOn, '')) }}:
+    dependsOn: ${{ parameters.dependsOn }}
+  ${{ if not(eq(parameters.condition, '')) }}:
+    condition: ${{ parameters.condition }}
+  ${{ if not(eq(parameters.variables, '')) }}:
+    variables: ${{ parameters.variables }}
+  environment: ${{ parameters.environment }}
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - download: current
+          artifact: bicepTemplates
+        - task: AzureCLI@2
+          name: Deploy_Bicep_Template
+          displayName: Deploy Bicep Template
+          inputs:
+            azureSubscription: ${{ variables.serviceConnectionName }}
+            scriptType: bash
+            scriptLocation: inlineScript
+            inlineScript: |
+              az deployment sub create --location uksouth --template-file bicepTemplates/main.bicep --parameters @bicepTemplates/Parameters/${{ variables.bicepParametersFile }}
+            workingDirectory: $(Pipeline.Workspace)

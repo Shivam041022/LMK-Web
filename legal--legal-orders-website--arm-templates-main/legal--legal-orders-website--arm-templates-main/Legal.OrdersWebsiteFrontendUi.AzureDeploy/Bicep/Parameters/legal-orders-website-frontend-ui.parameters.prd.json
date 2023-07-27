@@ -1,0 +1,52 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "tagsParam": {
+            "value": {
+                "application": "Legal Orders Website Frontend",
+                "businessArea": "Legal",
+                "dataClassification": "Company Internal",
+                "environment": "PRD",
+                "version": "0.0.1"
+            }
+        },
+        "resourceGroupParam": {
+            "value": {
+                "name": "legal-prd-orderswebsite-uks",
+                "location": "uksouth"
+            }
+        },
+        "applicationInsightsParam": {
+            "value": {
+                "name": "legal-prd-orderswebsite-appinsights-uks"
+            }
+        },
+        "logAnalyticsParam": {
+            "value": {
+                "name": "legal-prd-orderswebsite-loganalytics-uks",
+                "resourceGroup": "legal-prd-orderswebsite-uks",
+                "retentionInDays": 30,
+                "dailyQuotaGb": 1
+            }
+        },
+        "wafParam": {
+            "value": {
+                "name": "legalprdorderswebsitefrontendwaf"
+            }
+        },
+        "frontDoorParam": {
+            "value": {
+                "name": "legal-prd-orderswebsite-frontdoor",
+                "customDomainName": "reports.landmark.co.uk",
+                "backendPoolsApiHubHostname": "api.landmarkcloudservices.com",
+                "backendPoolsMfeHostname": "mfe.landmark.co.uk"
+            }
+        },
+        "staticSiteParam": {
+            "value": {
+                "name": "legal-prd-orderswebsite-staticsite"
+            }
+        }
+    }
+}

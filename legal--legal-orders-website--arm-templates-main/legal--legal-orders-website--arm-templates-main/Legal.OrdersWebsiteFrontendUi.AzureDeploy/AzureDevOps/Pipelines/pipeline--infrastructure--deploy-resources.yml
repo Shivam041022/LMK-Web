@@ -1,0 +1,57 @@
+pr: none
+trigger:
+  batch: true
+  branches:
+    include:
+    - main
+  paths:
+    include:
+    - Legal.OrdersWebsiteFrontendUi.AzureDeploy/Bicep/*
+    
+variables:
+- template: ../Templates/Variables/variables--pipeline--global.yml
+
+name: $(major).$(minor).$(patch)$(branch)
+
+stages:
+
+### Publish artefacts.
+- template: ../Templates/Stages/stage--shared--publish-artefacts.yml
+  parameters:
+    name: Publish_Artefacts
+    displayName: Publish Artefacts
+    variables:
+    - template: ../Variables/variables--infrastructure--global.yml
+
+### Deploy to BVT.
+- template: ../Templates/Stages/stage--infrastructure--deploy-to-environment.yml
+  parameters:
+    name: Deploy_BVT
+    displayName: Deploy BVT
+    dependsOn: Publish_Artefacts
+    variables:
+    - template: ../Variables/variables--infrastructure--global.yml
+    - template: ../Variables/variables--infrastructure--bvt.yml
+    environment: BVT
+
+### Deploy to UAT.
+- template: ../Templates/Stages/stage--infrastructure--deploy-to-environment.yml
+  parameters:
+    name: Deploy_UAT
+    displayName: Deploy UAT
+    dependsOn: Deploy_BVT
+    variables:
+    - template: ../Variables/variables--infrastructure--global.yml
+    - template: ../Variables/variables--infrastructure--uat.yml
+    environment: UAT
+
+### Deploy to PRD.
+- template: ../Templates/Stages/stage--infrastructure--deploy-to-environment.yml
+  parameters:
+    name: Deploy_PRD
+    displayName: Deploy PRD
+    dependsOn: Deploy_UAT
+    variables:
+    - template: ../Variables/variables--infrastructure--global.yml
+    - template: ../Variables/variables--infrastructure--prd.yml
+    environment: PRD

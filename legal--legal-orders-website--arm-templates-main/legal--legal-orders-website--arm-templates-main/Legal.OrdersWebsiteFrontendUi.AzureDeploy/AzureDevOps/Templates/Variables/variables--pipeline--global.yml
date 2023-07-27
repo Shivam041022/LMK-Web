@@ -1,0 +1,8 @@
+variables:
+  major: 1
+  minor: 0
+  patch: $[counter(format('{0}.{1}-{2}', variables['major'], variables['minor'], variables['Build.SourceBranchName']), 1)]
+  ${{ if eq( variables['Build.SourceBranchName'], 'main' ) }}: 
+    branch: ''
+  ${{ if ne( variables['Build.SourceBranchName'], 'main' ) }}: 
+    branch: -${{ variables['Build.SourceBranchName'] }}

@@ -1,0 +1,3 @@
+variables:
+  bicepTemplatesSourceFolder: $(Build.Repository.LocalPath)/Legal.OrdersWebsiteFrontendUi.AzureDeploy/Bicep
+  parameters.tags.value.version: $(Build.BuildNumber)

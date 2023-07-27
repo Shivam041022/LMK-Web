@@ -1,0 +1,52 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "tagsParam": {
+            "value": {
+                "application": "Legal Orders Website Frontend",
+                "businessArea": "Legal",
+                "dataClassification": "Company Internal",
+                "environment": "UAT",
+                "version": "0.0.1"
+            }
+        },
+        "resourceGroupParam": {
+            "value": {
+                "name": "legal-uat-orderswebsite-uks",
+                "location": "uksouth"
+            }
+        },
+        "applicationInsightsParam": {
+            "value": {
+                "name": "legal-uat-orderswebsite-appinsights-uks"
+            }
+        },
+        "logAnalyticsParam": {
+            "value": {
+                "name": "legal-uat-orderswebsite-loganalytics-uks",
+                "resourceGroup": "legal-uat-orderswebsite-uks",
+                "retentionInDays": 30,
+                "dailyQuotaGb": 1
+            }
+        },
+        "wafParam": {
+            "value": {
+                "name": "legaluatorderswebsitefrontendwaf"
+            }
+        },
+        "frontDoorParam": {
+            "value": {
+                "name": "legal-uat-orderswebsite-frontdoor",
+                "customDomainName": "uat-reports.landmark.co.uk",
+                "backendPoolsApiHubHostname": "uat-api.landmarkcloudservices.com",
+                "backendPoolsMfeHostname": "uat-mfe.landmark.co.uk"
+            }
+        },
+        "staticSiteParam": {
+            "value": {
+                "name": "legal-uat-orderswebsite-staticsite"
+            }
+        }
+    }
+}

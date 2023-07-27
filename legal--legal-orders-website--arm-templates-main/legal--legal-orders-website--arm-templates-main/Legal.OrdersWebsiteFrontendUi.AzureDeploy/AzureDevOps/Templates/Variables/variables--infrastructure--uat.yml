@@ -1,0 +1,3 @@
+variables:
+  serviceConnectionName: eng-legal-orderswebsite-uat
+  bicepParametersFile: legal-orders-website-frontend-ui.parameters.uat.json

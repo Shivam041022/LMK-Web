@@ -1,0 +1,45 @@
+parameters:
+- name: name
+  displayName: Stage Name
+  type: string
+
+- name: displayName
+  displayName: Stage Display Name
+  type: string
+
+- name: dependsOn
+  displayName: Depends On
+  type: object
+  default: ''
+
+- name: condition
+  displayName: Condition
+  type: string
+  default: ''
+
+- name: variables
+  displayName: Variables
+  type: object
+  default: ''
+
+stages:
+- stage: ${{ parameters.name }}
+  displayName: ${{ parameters.displayName }}
+  ${{ if not(eq(parameters.dependsOn, '')) }}:
+    dependsOn: ${{ parameters.dependsOn }}
+  ${{ if not(eq(parameters.condition, '')) }}:
+    condition: ${{ parameters.condition }}
+  ${{ if not(eq(parameters.variables, '')) }}:
+    variables: ${{ parameters.variables }}
+  jobs:
+  - job: Publish_Pipeline_Artifacts
+    displayName: Publish Pipeline Artifacts
+    steps:
+      ### Bicep templates
+      - task: PublishBuildArtifacts@1
+        name: Publish_Bicep_Templates
+        displayName: Publish Bicep Templates
+        inputs:
+          PathtoPublish: ${{ variables.bicepTemplatesSourceFolder }}
+          ArtifactName: bicepTemplates
+          publishLocation: Container
