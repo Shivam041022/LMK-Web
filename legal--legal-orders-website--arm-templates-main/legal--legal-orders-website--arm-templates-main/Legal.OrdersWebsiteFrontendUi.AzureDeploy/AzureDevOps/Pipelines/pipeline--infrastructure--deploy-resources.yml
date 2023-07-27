@@ -6,7 +6,7 @@ trigger:
     - main
   paths:
     include:
-    - Legal.OrdersWebsiteFrontendUi.AzureDeploy/Bicep/*
+    - Legal.OrdersWebsiteFrontendUi.AzureDeploy/Bicep1/*
     
 variables:
 - template: ../Templates/Variables/variables--pipeline--global.yml
